@@ -8,7 +8,8 @@ public class Reloj {
     Timer timer;
     
     public static void main(String[] args) {
-        new Reloj();
+        Metodos obj =  new Metodos();
+        obj.opcionesRelog();
     }
     
     public Reloj() {
