@@ -8,77 +8,36 @@ import javax.swing.JOptionPane;
 public class Metodos {
     
     Timer timer;
-    int horaAlarma,minAlarma;
-    boolean alarmaON=false,parar=false;
-    
-    public void opcionesRelog(){
-        Display.menu();
-        int opcion = Integer.parseInt(JOptionPane.showInputDialog("elige una opcion"));
-        switch (opcion){
-            case 1: Display.mostrarReloj();
-                    opcionesRelog();
-                   break;
-            case 2: crearAlarma();
-                   break;
-            case 3: activarAlarma();
-                   break;
-            case 4: pararAlarma();
-                   break;
-            case 0:break;
-        }
-    }
-    
-    public void crearAlarma(){
-        if (horaAlarma==0 && minAlarma==0){
-            System.out.println("Introduce la hora de tu alarma:");
-            horaAlarma = Integer.parseInt(JOptionPane.showInputDialog("HORA:"));
-            minAlarma = Integer.parseInt(JOptionPane.showInputDialog("MINUTOS:"));
+    static int horaAlarma,minAlarma;
+    static boolean alarmaON=false,parar=false;
+  
+    public static void crearAlarma(int hora, int min){
+        if (horaAlarma!=0 && minAlarma!=0){
+            JOptionPane.showMessageDialog(null, "Ya hay una alarma creada\n"+horaAlarma+":"+minAlarma);
         }else{
-            System.out.println("Alarma creada: "+horaAlarma+":"+minAlarma);
-            if(alarmaON==true){
-                System.out.println("La alarma esta activada");
-            }else{
-                System.out.println("La alarma no esta activada");
-                String alarma = JOptionPane.showInputDialog("Activar la alarma? SI/NO");
-                if (alarma.equalsIgnoreCase("SI")){
-                    activarAlarma();
-                }
-            }
+            horaAlarma = hora;
+            minAlarma = min;
+            JOptionPane.showMessageDialog(null, "Alarma creada");
         }
-        opcionesRelog();
     }
    
     public void activarAlarma() {
         if (horaAlarma==0 && minAlarma==0){
-            String alarma = JOptionPane.showInputDialog("No hay ninguna alarma creada. Quieres crear una?");
-            if (alarma.equalsIgnoreCase("SI")){
-                crearAlarma();
-            }else{
-                opcionesRelog();
-            }   
+            JOptionPane.showMessageDialog(null, "No hay ninguna alarma creada. Crea una primero");   
         }else{
-            String alarma = JOptionPane.showInputDialog("Activar la alarma? SI/NO");
-            if (alarma.equalsIgnoreCase("SI")){
-                alarmaON=true;
-            }else{
-                alarmaON=false;
-            }
-            if (alarmaON==true){
-                timer = new Timer();
-                timer.schedule(new TicTac(), 0, 1000);
-                opcionesRelog();
-            }
+            alarmaON=true;
+            JOptionPane.showMessageDialog(null, "Alarma activada");
+            timer = new Timer();
+            timer.schedule(new TicTac(), 0, 1000);
         }
     }
     
-    public void pararAlarma(){
+    public static void pararAlarma(){
         parar=true;
         horaAlarma=0;
         minAlarma=0;
-        opcionesRelog();
     }
        
-    
     public class TicTac extends TimerTask {
         
         @Override
